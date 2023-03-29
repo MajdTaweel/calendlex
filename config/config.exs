@@ -9,7 +9,8 @@ import Config
 
 config :calendlex,
   owner: %{
-    name: "Majd"
+    name: "Majd",
+    time_zone: "Asia/Hebron"
   },
   ecto_repos: [Calendlex.Repo]
 
