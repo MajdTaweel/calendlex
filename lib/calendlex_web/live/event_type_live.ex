@@ -12,18 +12,35 @@ defmodule CalendlexWeb.EventTypeLive do
           |> assign(event_type: event_type)
           |> assign(page_title: event_type.name)
 
-        {:ok, socket}
+        {:ok, socket, temporary_assigns: [time_slots: []]}
 
       {:error, :not_found} ->
-        {:ok, socket, layout: {CalendlexWeb.Layouts, "not_found.html"}}
+        {:ok, socket, layout: {CalendlexWeb.Layouts, :not_found}}
     end
   end
 
   def handle_params(params, _url, socket) do
-    socket = assign_dates(socket, params)
+    socket =
+      socket
+      |> assign_dates(params)
+      |> assign_time_slots(params)
 
     {:noreply, socket}
   end
+
+  defp assign_time_slots(socket, %{"date" => _}) do
+    date = socket.assigns.current
+    time_zone = socket.assigns.owner.time_zone
+    event_duration = socket.assigns.event_type.duration
+
+    time_slots = Calendlex.build_time_slots(date, time_zone, event_duration)
+
+    socket
+    |> assign(time_slots: time_slots)
+    |> assign(selected_date: date)
+  end
+
+  defp assign_time_slots(socket, _), do: socket
 
   defp assign_dates(socket, params) do
     current = current_from_params(socket, params)
