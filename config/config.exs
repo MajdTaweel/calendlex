@@ -8,6 +8,9 @@
 import Config
 
 config :calendlex,
+  owner: %{
+    name: "Majd"
+  },
   ecto_repos: [Calendlex.Repo]
 
 # Configures the endpoint
