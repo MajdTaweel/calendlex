@@ -14,6 +14,7 @@ config :calendlex,
     day_start: 9,
     day_end: 19
   },
+  basic_auth: [username: "admin", password: "admin"],
   ecto_repos: [Calendlex.Repo]
 
 # Configures the endpoint

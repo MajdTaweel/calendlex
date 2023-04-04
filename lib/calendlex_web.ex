@@ -57,6 +57,19 @@ defmodule CalendlexWeb do
     end
   end
 
+  def admin_live_view do
+    quote do
+      use Phoenix.LiveView,
+        layout: {CalendlexWeb.Layouts, :admin}
+
+      import CalendlexWeb.LiveViewHelpers
+
+      alias Phoenix.LiveView
+
+      unquote(html_helpers())
+    end
+  end
+
   def live_component do
     quote do
       use Phoenix.LiveComponent
