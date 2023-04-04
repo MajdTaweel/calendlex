@@ -13,7 +13,7 @@
     <button
       id={"clipboard_#{@event_type.id}"}
       class="text-blue-500"
-      data-content={~p"/#{@event_type.slug}"}
+      data-content={url(~p"/#{@event_type.slug}")}
       +
       phx-hook="Clipboard"
     >
