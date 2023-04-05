@@ -1,0 +1,74 @@
+<div>
+  <.form :let={f} for={@changeset} phx-target={@myself} phx-change="change" phx-submit="submit">
+    <header class="flex items-center px-6 pb-6 mb-6 -mx-6 text-right border-b border-gray-300 gap-x-4">
+      <h3 class="text-gray-900">What event is this?</h3>
+    </header>
+    <div class="w-3/5 mb-6">
+      <.label for={f[:name].id}>
+        Name
+      </.label>
+      <.input field={f[:name]} class="w-full p-2 border rounded-md" required autofocus />
+      <div class="mt-2 text-sm text-blue-500">
+        <span class="text-gray-500">Public url:</span>
+        <%= @public_url %>
+      </div>
+      <.error :for={msg <- f[:name].errors}><%= msg %></.error>
+    </div>
+    <div class="w-3/5 mb-6">
+      <.input type="textarea" field={f[:description]} class="w-full p-2 border h-36 rounded-md" />
+    </div>
+    <div class="w-3/5 mb-6">
+      <.label for={f[:duration].id}>
+        Duration
+      </.label>
+      <div class="flex items-center gap-x-2">
+        <.input
+          type="number"
+          field={f[:duration]}
+          class="w-20 p-2 border rounded-md"
+          required
+          min="1"
+        /> minutes
+      </div>
+      <.error :for={msg <- f[:duration].errors}><%= msg %></.error>
+    </div>
+    <div class="w-3/5 mb-6">
+      <.label for={f[:color].id}>
+        Color
+      </.label>
+      <div class="flex gap-x-2">
+        <%= for color <- ~w(gray red yellow green blue indigo pink purple) do %>
+          <label
+            class="relative cursor-pointer"
+            phx-target={@myself}
+            phx-click="set_color"
+            phx-value-color={color}
+          >
+            <div class={"inline-block w-8 h-8 #{color}-bg rounded-full"}></div>
+            <div class="hidden">
+              <.input type="radio" field={f[:color]} value={color} id={color} />
+            </div>
+            <%= if @current_color == color do %>
+              <span class="absolute z-10 inline-block w-4 h-4 text-white top-1 left-1/2 -translate-x-1/2">
+                <i class="fas fa-check"></i>
+              </span>
+            <% end %>
+          </label>
+        <% end %>
+      </div>
+      <.error :for={msg <- f[:duration].errors}><%= msg %></.error>
+    </div>
+    <footer class="flex items-center justify-end px-6 pt-6 -mx-6 text-right border-t border-gray-300 gap-x-4">
+      <%= live_redirect to: ~p"/admin" do %>
+        Cancel
+      <% end %>
+      <button
+        class="px-4 py-2 text-white bg-blue-600 rounded-full"
+        type="submit"
+        phx-disable-with="Saving..."
+      >
+        Save
+      </button>
+    </footer>
+  </.form>
+</div>

@@ -44,7 +44,7 @@ defmodule CalendlexWeb.ScheduleEventLive do
     |> case do
       {:ok, event} ->
         {:noreply,
-         push_redirect(socket,
+         push_navigate(socket,
            to: ~p"/events/#{event_type.slug}/#{event.id}"
          )}
 

@@ -43,7 +43,12 @@
           <.input field={f[:email]} label="Email" class="w-full p-2 border rounded-md" required />
         </div>
         <div class="w-4/5 mb-6">
-          <.input field={f[:comments]} label="Comments" class="w-full p-2 border h-36 rounded-md" />
+          <.input
+            type="textarea"
+            field={f[:comments]}
+            label="Comments"
+            class="w-full p-2 border h-36 rounded-md"
+          />
         </div>
         <div class="w-4/5 mb-6">
           <button
